@@ -1,6 +1,7 @@
 // #!/usr/bin/env node ONLY NEED THIS IF YOUre using anything other than a windows pc
 const fs = require('fs');
 const {lstat} = fs.promises;
+const chalk = require('chalk');
 
 //This is the best solution
 fs.readdir(process.cwd(), async (err, filenames) => {
@@ -14,7 +15,11 @@ fs.readdir(process.cwd(), async (err, filenames) => {
     const allStats = await Promise.all(statPromises);
     for (let stats of allStats) {
         const index = allStats.indexOf(stats);
-        console.log(filenames[index], stats.isFile());
+        if(stats.isFile()) {
+            console.log(filenames[index]);
+        } else {
+            console.log(chalk.red(filenames[index]));
+        }
     }
 });
 
